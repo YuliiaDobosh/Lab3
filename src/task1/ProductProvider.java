@@ -4,12 +4,23 @@ public class ProductProvider {
     private String name;
     private Product product;
 
+    private int CountOfProduct;
+
     public ProductProvider() {
     }
 
-    public ProductProvider(final String name, final Product product) {
+    public ProductProvider(final String name, final Product product, final int countOfProduct) {
         this.name = name;
         this.product = product;
+        CountOfProduct = countOfProduct;
+    }
+
+    public int getCountOfProduct() {
+        return CountOfProduct;
+    }
+
+    public void setCountOfProduct(final int countOfProduct) {
+        CountOfProduct = countOfProduct;
     }
 
     public String getName() {
@@ -31,7 +42,6 @@ public class ProductProvider {
     public Product provideProduct() {
         final Product providedProduct = new Product();
         providedProduct.setName(product.getName());
-        providedProduct.setCount(product.getCount());
         providedProduct.setPrice(product.getPrice());
         return providedProduct;
     }

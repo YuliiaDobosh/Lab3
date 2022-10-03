@@ -1,17 +1,17 @@
 package task1;
 
+import java.util.Objects;
+
 public class Product {
     private String name;
     private double price;
-    private int count;
 
     public Product() {
     }
 
-    public Product(final String name, final double price, final int count) {
+    public Product(final String name, final double price) {
         this.name = name;
         this.price = price;
-        this.count = count;
     }
 
     public String getName() {
@@ -26,15 +26,25 @@ public class Product {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(final double price) {
         this.price = price;
     }
 
-    public int getCount() {
-        return count;
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final Product product = (Product) o;
+        return Double.compare(product.price, price) == 0 && Objects.equals(name, product.name);
     }
 
-    public void setCount(int count) {
-        this.count = count;
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, price);
+    }
+
+    @Override
+    public String toString() {
+        return name + " " + price + "$";
     }
 }

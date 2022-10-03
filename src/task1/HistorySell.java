@@ -39,4 +39,9 @@ public class HistorySell {
     public void setCustomer(final Customer customer) {
         this.customer = customer;
     }
+
+    @Override
+    public String toString() {
+        return product + " " + localDateTime + " " + customer + " ";
+    }
 }
