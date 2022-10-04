@@ -1,19 +1,23 @@
 package task1;
 
 import java.time.LocalDateTime;
+import java.util.concurrent.CountDownLatch;
 
 public class HistorySell {
     private Product product;
     private LocalDateTime localDateTime;
     private Customer customer;
 
+    private int count;
+
     public HistorySell() {
     }
 
-    public HistorySell(final Product product, final LocalDateTime localDateTime, final Customer customer) {
+    public HistorySell(final Product product, final LocalDateTime localDateTime, final Customer customer, final int count) {
         this.product = product;
         this.localDateTime = localDateTime;
         this.customer = customer;
+        this.count = count;
     }
 
     public Product getProduct() {
@@ -40,8 +44,16 @@ public class HistorySell {
         this.customer = customer;
     }
 
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(final int count) {
+        this.count = count;
+    }
+
     @Override
     public String toString() {
-        return product + " " + localDateTime + " " + customer + " ";
+        return product + " " + count + " " + localDateTime + " " + customer + " ";
     }
 }
