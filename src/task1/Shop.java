@@ -1,13 +1,24 @@
 package task1;
 
+import task2.ProductInStorage;
+
 import java.util.List;
 
 public class Shop {
     private List<Product> products;
     private List<HistorySell> historySells;
+    private ProductInStorage productInStorage;
 
     public List<Product> getProducts() {
         return products;
+    }
+
+    public ProductInStorage getProductInStorage() {
+        return productInStorage;
+    }
+
+    public void setProductInStorage(final ProductInStorage productInStorage) {
+        this.productInStorage = productInStorage;
     }
 
     public void setProducts(final List<Product> products) {
@@ -29,5 +40,6 @@ public class Shop {
     public Shop(final List<Product> products, final List<HistorySell> historySells) {
         this.products = products;
         this.historySells = historySells;
+        this.productInStorage = new ProductInStorage(products);
     }
 }

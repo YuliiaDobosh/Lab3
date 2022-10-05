@@ -1,9 +1,15 @@
 package task1;
 
+import java.util.List;
+
 public class Customer {
     private String name;
 
     public void buyProduct(final Product product) {
+
+    }
+
+    public void buyProducts(final List<Product> products) {
 
     }
 

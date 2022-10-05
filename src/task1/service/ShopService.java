@@ -5,9 +5,8 @@ import task1.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 public class ShopService {
     protected Shop shop;
@@ -35,9 +34,7 @@ public class ShopService {
     }
 
     public void getProduct(final ProductProvider productProvider) {
-        for (int i = 0; i < productProvider.getCountOfProduct(); i++) {
-            shop.getProducts().add(productProvider.provideProduct());
-        }
+        shop.getProductInStorage().getProductInStorage(productProvider);
     }
 
     public void addHistorySell(final Product product, final LocalDateTime localDateTime, final Customer customer, final int count) {
@@ -50,34 +47,36 @@ public class ShopService {
         customer.buyProduct(foundProduct);
     }
 
-    public void sellProduct(final Customer customer, final Product product, final int count) {
-        final Product foundProduct = getAndRemoveProduct(product);
-        addHistorySell(foundProduct, LocalDateTime.now(), customer, count);
-        customer.buyProduct(foundProduct);
+    public void sellProducts(final Customer customer, final Product product, final int count) {
+        final List<Product> foundProducts = getAndRemoveProducts(new ArrayList<>(Collections.nCopies(count, product)));
+        addHistorySell(product, LocalDateTime.now(), customer, count);
+        customer.buyProducts(foundProducts);
     }
 
     public Product getAndRemoveProduct(final Product product) {
         final Product foundProduct = shop.getProducts()
                 .stream()
                 .filter(e -> e.equals(product))
-                .findAny()
+                .findFirst()
                 .orElseThrow();
-        shop.setProducts(shop.getProducts().stream()
-                .filter(e -> !e.equals(foundProduct))
-                .collect(Collectors.toList()));
+
+        boolean isRepeat = false;
+        final List<Product> products = new ArrayList<>();
+        for (final Product shopProduct : shop.getProducts()) {
+            if (shopProduct.equals(foundProduct) && !isRepeat) {
+                isRepeat = true;
+            } else {
+                products.add(shopProduct);
+            }
+        }
+        shop.setProducts(products);
         return foundProduct;
     }
 
     public List<Product> getAndRemoveProducts(final List<Product> products) {
-        final Product foundProducts = shop.getProducts()
-                .stream()
-                .filter(e -> products.)
-                .findAny()
-                .orElseThrow();
-        shop.setProducts(shop.getProducts().stream()
-                .filter(e -> !e.equals(foundProducts))
-                .collect(Collectors.toList()));
-        return foundProducts;
+        final List<Product> productList = new ArrayList<>();
+        products.forEach(e -> productList.add(getAndRemoveProduct(e)));
+        return productList;
     }
 
     public static Shop getEmptyShop() {
