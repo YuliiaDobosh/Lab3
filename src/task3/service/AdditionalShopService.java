@@ -31,7 +31,7 @@ public class AdditionalShopService {
     }
 
     public List<Product> sortByPrice() {
-        return new ArrayList<>(shop.getProducts())
+        return shop.getProducts()
                 .stream()
                 .sorted(Comparator.comparing(Product::getPrice))
                 .collect(Collectors.toList());
